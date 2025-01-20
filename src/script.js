@@ -1,8 +1,9 @@
 var colorPicker = new iro.ColorPicker("#ColorPicker", {
-  width: 300,
+  height: 300,
   color: "rgb(255, 255, 255)",
   borderWidth: 1,
   borderColor: "#fff",
+  layoutDirection: 'horizontal',
   layout: [
     { component: iro.ui.Wheel },
     { component: iro.ui.Slider, options: { sliderType: 'hue' } },
@@ -60,10 +61,9 @@ function finishGame(){
 // Button click event to check distance
 document.getElementById("checkColorButton").addEventListener("click", function () {
   var chosenColor = Object.values(colorPicker.color.hsl);
-  var evaluationString = compareHSVColors(targetColor, chosenColor);
-  let p = document.createElement("p");
-  p.textContent = "Guess " + numberOfGuess + " of 3: " + evaluationString;
-  resultDiv.prepend(p);
+  var resultDivs = compareHSVColors(targetColor, chosenColor);
+
+  resultDiv.prepend(resultDivs);
   numberOfGuess++
   if(numberOfGuess>totalAllowedGuesses){
     finishGame()
