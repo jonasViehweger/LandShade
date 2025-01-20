@@ -19,15 +19,17 @@ function rgbToHsv(r, g, b) {
         h /= 6;
     }
 
-    return [h, s, v];
+    return [h*360, s*100, v*100];
 }
 
 function compareHSVColors(hsv1, hsv2) {
     const [h1, s1, v1] = hsv1;
     const [h2, s2, v2] = hsv2;
+    console.log(hsv1)
+    console.log(hsv2)
 
     // Define thresholds for textual descriptions
-    const hueDifference = Math.abs(h1 - h2);
+    const hueDifference = ((Math.abs(h1 - h2) + 360) % 360)/1.8
     const saturationDifference = Math.abs(s1 - s2);
     const valueDifference = Math.abs(v1 - v2);
 
@@ -42,21 +44,20 @@ function compareHSVColors(hsv1, hsv2) {
     // Describe hue
     let hueDescription = "";
     if (hueDifference > 0) {
-        const closerToRed = (h1 - h2 + 360) % 360 <= 180 ? "closer towards red" : "further from red";
-        hueDescription = `The target color is ${describeDifference(hueDifference, closerToRed)}.`;
+        hueDescription = `The target hue is ${describeDifference(hueDifference, "different")}.`;
     }
 
     // Describe saturation
     let saturationDescription = "";
     if (saturationDifference > 0) {
-        const moreOrLessSaturated = s1 > s2 ? "less saturated" : "more saturated";
+        const moreOrLessSaturated = s1 > s2 ? "more saturated" : "less saturated";
         saturationDescription = `It is ${describeDifference(saturationDifference, moreOrLessSaturated)}.`;
     }
 
     // Describe value (brightness)
     let valueDescription = "";
     if (valueDifference > 0) {
-        const lighterOrDarker = v1 > v2 ? "lighter" : "darker";
+        const lighterOrDarker = v1 > v2 ? "brighter" : "darker";
         valueDescription = `It is ${describeDifference(valueDifference, lighterOrDarker)}.`;
     }
 
