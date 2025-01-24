@@ -1,31 +1,71 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
+  font-family: "Josefin Sans", sans-serif;
+  background-color: #FAF9F6;
+  margin:0;
+  padding:0;
 }
+
+p {
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin-top: 0px;
+  background: rgb(102,71,52);
+  background: linear-gradient(114deg, rgba(102,71,52,1) 15%, rgba(77,77,47,1) 44%, rgba(37,56,22,1) 72%, rgba(35,52,36,1) 100%); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,700;1,700&display=swap');
 
 .container {
   text-align: center;
 }
 
-.title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.navbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+  height: 50px;
+  width: 100%;
+  background-color: #FAF9F6;
+  border-bottom: 2px solid #bbb;
+}
+
+.navbar a {
+  all: unset;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.navbar a:hover {
+  background-color: rgba(0,0,0,0.1);
+
+}
+
+h1 {
+  font-size: 7rem;
+  font-weight: 700;
+  margin-bottom: 0px; 
+  background: rgb(102,71,52);
+  background: linear-gradient(114deg, rgba(102,71,52,1) 15%, rgba(77,77,47,1) 44%, rgba(37,56,22,1) 72%, rgba(35,52,36,1) 100%); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .picker-and-color {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 12px;
   margin-bottom: 1rem;
 }
-
-
 
 .selectedColor {
   width: 295px;
@@ -33,16 +73,17 @@ body {
   background-color: rgb(255, 0, 0);
   border: 1px solid #ccc;
   border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder; 
+  font-size: 20px;
+  transition: font-size .1s ease-in-out;
 }
 
-button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #007BFF;
-  color: white;
-  cursor: pointer;
+.selectedColor:hover {
+  font-size: 22px ;
 }
 
 button:hover {
@@ -50,27 +91,33 @@ button:hover {
 }
 
 .hint {
-  width: 25px;
-  height: 25px;
-  background: gray;
+  display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  background: gray;
+  width: 25px;
+  height: 25px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  color: white;
+  transform: translateX(156px);
 }
 
 .hint#perfect {
-  background: #313695
+  background: green;
+  color: white;
+  font-size: 12px;
 }
 
 .hint#close {
   background: #fdae61;
+  color: white;
+  font-size: 14px;
 }
 
 .hint#far {
-  background: #a50026
+  background: #a50026;
+  color: white;
+  font-size: 18px;
 }
 
 .resultRow {
@@ -78,6 +125,54 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 12px;
   margin-bottom: 1rem;
+}
+
+
+.overlay {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  z-index: 1;
+  display: block;
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
 }

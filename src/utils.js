@@ -26,8 +26,6 @@ function rgbToHsv(r, g, b) {
 function compareHSVColors(target, selected) {
     const [h1, s1, v1] = target;
     const [h2, s2, v2] = selected;
-    console.log(target)
-    console.log(selected)
 
     // Define thresholds for textual descriptions
     const hueDifference = (h1 - h2)/3.6
@@ -35,19 +33,21 @@ function compareHSVColors(target, selected) {
     const valueDifference = v1 - v2;
     const differences = [hueDifference,saturationDifference,valueDifference]
 
+    const totalDiff = [hueDifference, saturationDifference, valueDifference].reduce((partialSum, a) => partialSum + Math.abs(a), 0);
+
     // Helper function for differences
     const describeDifference = (difference) => {
         var arrow = "●";
-        if (difference > 5 ) {
+        if (difference > 2.5 ) {
             arrow = "⮝"
-        } else if (difference < -5 ){
+        } else if (difference < -2.5 ){
             arrow = "⮟"
         }
         var guessType = "perfect"
-        if (Math.abs(difference) > 5) {
-            guessType = "close";
-        } else if (Math.abs(difference) > 20){
+        if (Math.abs(difference) > 20) {
             guessType = "far";
+        } else if (Math.abs(difference) > 2.5){
+            guessType = "close";
         }
         return `<div class="hint" id=${guessType}>${arrow}</div>`;
     };
@@ -66,53 +66,5 @@ function compareHSVColors(target, selected) {
         resultRow.appendChild(tempDiv.firstChild);
     });
 
-    
-    return resultRow
+    return [resultRow, Math.round(totalDiff)]
 }
-
-// function compareHSVColors(hsv1, hsv2) {
-//     const [h1, s1, v1] = hsv1;
-//     const [h2, s2, v2] = hsv2;
-//     console.log(hsv1)
-//     console.log(hsv2)
-
-//     // Define thresholds for textual descriptions
-//     const hueDifference = ((Math.abs(h1 - h2) + 360) % 360)/1.8
-//     const saturationDifference = Math.abs(s1 - s2);
-//     const valueDifference = Math.abs(v1 - v2);
-
-//     // Helper function for differences
-//     const describeDifference = (difference, type) => {
-//         if (difference < 10) return `a little ${type}`;
-//         if (difference < 30) return `somewhat ${type}`;
-//         if (difference < 60) return `a lot ${type}`;
-//         return `much ${type}`;
-//     };
-
-//     // Describe hue
-//     let hueDescription = "";
-//     if (hueDifference > 0) {
-//         hueDescription = `The target hue is ${describeDifference(hueDifference, "different")}.`;
-//     }
-
-//     // Describe saturation
-//     let saturationDescription = "";
-//     if (saturationDifference > 0) {
-//         const moreOrLessSaturated = s1 > s2 ? "more saturated" : "less saturated";
-//         saturationDescription = `It is ${describeDifference(saturationDifference, moreOrLessSaturated)}.`;
-//     }
-
-//     // Describe value (brightness)
-//     let valueDescription = "";
-//     if (valueDifference > 0) {
-//         const lighterOrDarker = v1 > v2 ? "brighter" : "darker";
-//         valueDescription = `It is ${describeDifference(valueDifference, lighterOrDarker)}.`;
-//     }
-
-//     // Combine descriptions
-//     return [hueDescription, saturationDescription, valueDescription]
-//         .filter(desc => desc) // Remove empty descriptions
-//         .join(" ");
-// }
-
-

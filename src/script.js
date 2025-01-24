@@ -15,9 +15,13 @@ var colorPicker = new iro.ColorPicker("#ColorPicker", {
 var selectedColorDiv = document.getElementById("SelectedColor");
 var resultDiv = document.getElementById("result");
 
+var contrastColor = "";
 // Event listener for color changes
 colorPicker.on(["color:init", "color:change"], function (color) {
+  const c = color.hsl;
   selectedColorDiv.style.backgroundColor = color.hexString;
+  contrastColor = `hsl(${c.h}, ${(c.s+50)%100}%, ${(c.l+50)%100}%)`;
+  selectedColorDiv.style.color = contrastColor;
 });
 
 function getRandomInt(max) {
@@ -53,20 +57,32 @@ var targetColor = rgbToHsv(currentCountry.red,currentCountry.green,currentCountr
 var numberOfGuess = 1;
 var totalAllowedGuesses = 3;
 
-function finishGame(){
-  document.getElementById("checkColorButton").disabled = true;
+function finishGame(distance){
+  //document.getElementById("checkColorButton").disabled = true;
   document.body.style.background = `rgb(${currentCountry.red}, ${currentCountry.green}, ${currentCountry.blue})`;
+  var resultText = document.getElementById("resultContent");
+  resultText.textContent = `Your final distance was ${distance}`
+  window.location.href = '#resultOverlay';
+  selectedColorDiv.style.pointerEvents = "none";
+  selectedColorDiv.textContent = "";
 }
 
 // Button click event to check distance
-document.getElementById("checkColorButton").addEventListener("click", function () {
-  var chosenColor = Object.values(colorPicker.color.hsl);
-  var resultDivs = compareHSVColors(targetColor, chosenColor);
+selectedColorDiv.addEventListener("click", function () {
+  var hsl = colorPicker.color.hsl;
+  var chosenColor = Object.values(hsl);
+  const [resultDivs, distance] = compareHSVColors(targetColor, chosenColor);
 
-  resultDiv.prepend(resultDivs);
+  const nGuess = document.createElement("div");
+  nGuess.innerHTML = `<div class="hint" style="background: ${colorPicker.color.hexString}; color: hsl(${hsl.h}, ${(hsl.s+50)%100}%, ${(hsl.l+50)%100}%); width: 295px;">${numberOfGuess} | 3 &emsp; Distance to Color: ${distance}</div>`;
+  resultDivs.append(nGuess.firstChild);
+
+  resultDiv.append(resultDivs);
   numberOfGuess++
   if(numberOfGuess>totalAllowedGuesses){
-    finishGame()
+    console.log(chosenColor)
+    console.log(targetColor)
+    finishGame(distance)
   }
 });
 
