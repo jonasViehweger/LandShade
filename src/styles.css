@@ -21,6 +21,10 @@ p {
 
 .container {
   text-align: center;
+  width: 729px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar {
@@ -90,16 +94,34 @@ button:hover {
   background-color: #0056b3;
 }
 
+.result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.resultRow {
+  margin-left: auto;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+ 
+}
+
 .hint {
   display: flex;
   justify-content: center;
   align-items: center;
   background: gray;
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  transform: translateX(156px);
+
 }
 
 .hint#perfect {
@@ -114,21 +136,35 @@ button:hover {
   font-size: 14px;
 }
 
+.hint#close svg{
+  transform: scale(0.75);
+}
+
 .hint#far {
   background: #a50026;
   color: white;
   font-size: 18px;
 }
 
-.resultRow {
-  height: 20px;
+.hint#text {
+  cursor: pointer;
+}
+
+.swatch {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 1rem;
+  background: gray;
+  width: 360px;
+  height: 160px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: linear-gradient(114deg, rgba(102,71,52,1) 15%, rgba(77,77,47,1) 44%, rgba(37,56,22,1) 72%, rgba(35,52,36,1) 100%); 
 }
 
+.colorInfo  p {
+  font-size: 14px;
+}
 
 .overlay {
   z-index: 1;
@@ -175,4 +211,6 @@ button:hover {
 .popup .content {
   max-height: 30%;
   overflow: auto;
+  display: flex;
+  gap: 20px;
 }

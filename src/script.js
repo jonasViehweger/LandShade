@@ -52,21 +52,62 @@ promptParagraph.textContent = `
   ${currentCountry.shapeName} have in ${months[currentCountry.month]}?`
 
 // Target color for comparison
-var targetColor = rgbToHsv(currentCountry.red,currentCountry.green,currentCountry.blue);
+var targetColor = rgbToHsl(currentCountry.red,currentCountry.green,currentCountry.blue);
+var targetColorHSL = `hsl(${targetColor[0]}, ${targetColor[1]}%, ${targetColor[2]}%)`
+var targetColorHex = rgbToHex(currentCountry.red,currentCountry.green,currentCountry.blue);
 
 var numberOfGuess = 1;
 var totalAllowedGuesses = 3;
 
-function finishGame(distance){
-  //document.getElementById("checkColorButton").disabled = true;
-  document.body.style.background = `rgb(${currentCountry.red}, ${currentCountry.green}, ${currentCountry.blue})`;
-  var resultText = document.getElementById("resultContent");
-  resultText.textContent = `Your final distance was ${distance}`
-  window.location.href = '#resultOverlay';
-  selectedColorDiv.style.pointerEvents = "none";
-  selectedColorDiv.textContent = "";
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
 }
 
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+
+function finishGame(distance){
+  var finalDistance = document.getElementById("finalDistance");
+  finalDistance.textContent = `Your final distance to the target color was: ${distance}`
+  var swatch = document.getElementsByClassName("swatch")[0];
+  swatch.style.background = `linear-gradient(90deg, ${finalColor.hslString} 50%, ${targetColorHSL} 50%)`
+
+  var colorInfoTarget = document.getElementsByClassName("colorInfo")[1];
+  colorInfoTarget.innerHTML = `
+    <h3>Target Color</h3>
+  <p>${targetColorHSL}</p>
+  <p>${targetColorHex}</p>
+  `
+
+  var colorInfoUser = document.getElementsByClassName("colorInfo")[0];
+  colorInfoUser.innerHTML = `
+    <h3>User Color</h3>
+  <p>${finalColor.hslString}</p>
+  <p>${finalColor.hexString}</p>
+  `
+
+  selectedColorDiv.style.pointerEvents = "none";
+  selectedColorDiv.textContent = "";
+  const finalGuess = document.createElement("div");
+  finalGuess.innerHTML = `<a class="hint resultRow finalButton" id="text" style="background: ${targetColorHSL}; color: hsl(${targetColor[0]}, ${(targetColor[1]+50)%100}%, ${(targetColor[2]+50)%100}%); width: 416px; height: 70px;" onClick="gotoResults()">Your final distance was ${distance} away.<br/>
+  Click to see results. </a>`;
+  resultDiv.append(finalGuess.firstChild);
+  window.location.href = '#resultOverlay';
+}
+
+function updateRecord(div) {
+  colorPicker.colors[0].rgbString = div.style.background;
+}
+
+function gotoResults(){
+  window.location.href = '#resultOverlay';
+}
+
+var finalColor;
 // Button click event to check distance
 selectedColorDiv.addEventListener("click", function () {
   var hsl = colorPicker.color.hsl;
@@ -74,12 +115,13 @@ selectedColorDiv.addEventListener("click", function () {
   const [resultDivs, distance] = compareHSVColors(targetColor, chosenColor);
 
   const nGuess = document.createElement("div");
-  nGuess.innerHTML = `<div class="hint" style="background: ${colorPicker.color.hexString}; color: hsl(${hsl.h}, ${(hsl.s+50)%100}%, ${(hsl.l+50)%100}%); width: 295px;">${numberOfGuess} | 3 &emsp; Distance to Color: ${distance}</div>`;
+  nGuess.innerHTML = `<div onclick="updateRecord(this)" class="hint" id="text" style="background: ${colorPicker.color.hexString}; color: hsl(${hsl.h}, ${(hsl.s+50)%100}%, ${(hsl.l+50)%100}%); width: 295px; text-align: left;">&emsp;${numberOfGuess} | 3 &emsp; Distance to Color: ${distance}</div>`;
   resultDivs.append(nGuess.firstChild);
 
   resultDiv.append(resultDivs);
   numberOfGuess++
   if(numberOfGuess>totalAllowedGuesses){
+    finalColor = colorPicker.color;
     console.log(chosenColor)
     console.log(targetColor)
     finishGame(distance)

@@ -24,7 +24,19 @@
   <div id="resultOverlay" class="overlay">
     <div class="popup">
       <a class="close" href="#">&times;</a>
+      <p id="finalDistance">Your final distance to the target color was: </p>
       <div class="content" id="resultContent">
+        <div class="colorInfo" style="text-align: right;">
+          <h3>Your Color</h3>
+          <p>RGB HERE</p>
+          <p>HSL HERE</p>
+        </div>
+        <div class="swatch"></div>
+        <div class="colorInfo" style="text-align: left;">
+          <h3>Target Color</h3>
+          <p>RGB HERE</p>
+          <p>HSL HERE</p>
+        </div>
       </div>
     </div>
   </div>
@@ -40,7 +52,6 @@
       <div class="selectedColor" id="SelectedColor">Check Color</div>
     </div>
     <div class="result" id="result"></div>
-    
   </div>
   <script src="iro.min.js"></script>
   <script src="utils.js"></script>
