@@ -1,61 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LandShade</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-  <div id="popup1" class="overlay">
-    <div class="popup">
-      <h2>Info</h2>
-      <a class="close" href="#">&times;</a>
-      <div class="content">
-        The colors are based on 20 years of satellite data. The used satellite data was acquired by the MODIS sensors. These sensors have a very coarse resolution of 500m per pixel.<br/> 
-        This means that for urban areas and water areas, the signal can be quite mixed with a lot of the surrounding land cover in the color as well. 
-        <br/><br/>
-        Also, snow has not been masked out. Keep that in mind for winter colors.
-      </div>
-    </div>
-  </div>
-
-  <div id="resultOverlay" class="overlay">
-    <div class="popup">
-      <a class="close" href="#">&times;</a>
-      <p id="finalDistance">Your final distance to the target color was: </p>
-      <div class="content" id="resultContent">
-        <div class="colorInfo" style="text-align: right;">
-          <h3>Your Color</h3>
-          <p>RGB HERE</p>
-          <p>HSL HERE</p>
-        </div>
-        <div class="swatch"></div>
-        <div class="colorInfo" style="text-align: left;">
-          <h3>Target Color</h3>
-          <p>RGB HERE</p>
-          <p>HSL HERE</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LandShade</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="popup1" class="overlay">
+      <div class="popup">
+        <h2>Info</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+          The colors are based on 20 years of satellite data. The used satellite
+          data was acquired by the MODIS sensors. These sensors have a very
+          coarse resolution of 500m per pixel.<br />
+          This means that for urban areas and water areas, the signal can be
+          quite mixed with a lot of the surrounding land cover in the color as
+          well.
+          <br /><br />
+          Also, snow has not been masked out. Keep that in mind for winter
+          colors.
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="navbar">
-    <a id="help" href="#popup1">?</a>
-  </div>
-  <div class="container">
-    <h1 class="title">LandShade</h1>
-    <p id="promptParagraph"></p>
-    <div class="picker-and-color">
-      <div class="colorPicker" id="ColorPicker"></div>
-      <div class="selectedColor" id="SelectedColor">Check Color</div>
+    <div id="resultOverlay" class="overlay">
+      <div class="popup">
+        <a class="close" href="#">&times;</a>
+        <p id="finalDistance">Your final distance to the target color was:</p>
+        <div class="content" id="resultContent">
+          <div class="colorInfo" style="text-align: right">
+            <h3>Your Color</h3>
+            <p>RGB HERE</p>
+            <p>HSL HERE</p>
+          </div>
+          <div class="swatch"></div>
+          <div class="colorInfo" style="text-align: left">
+            <h3>Target Color</h3>
+            <p>RGB HERE</p>
+            <p>HSL HERE</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="result" id="result"></div>
-  </div>
-  <script src="iro.min.js"></script>
-  <script src="utils.js"></script>
-  <script src="colors.js"></script>
-  <script src="script.js"></script>
-</body>
+
+    <div class="navbar">
+      <a id="help" href="#popup1">?</a>
+    </div>
+    <div class="container">
+      <h1 class="title">LandShade</h1>
+      <p id="promptParagraph"></p>
+      <div class="picker-and-color">
+        <div class="colorPicker" id="ColorPicker"></div>
+        <div class="selectedColor" id="SelectedColor">Check Color</div>
+      </div>
+      <div class="result" id="result"></div>
+    </div>
+    <script src="iro.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="colors.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

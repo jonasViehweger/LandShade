@@ -1,23 +1,28 @@
 body {
   font-family: "Josefin Sans", sans-serif;
-  background-color: #FAF9F6;
-  margin:0;
-  padding:0;
+  background-color: #faf9f6;
+  margin: 0;
+  padding: 0;
 }
 
 p {
   font-size: 1.5rem;
   font-weight: 100;
   margin-top: 0px;
-  background: rgb(102,71,52);
-  background: linear-gradient(114deg, rgba(102,71,52,1) 15%, rgba(77,77,47,1) 44%, rgba(37,56,22,1) 72%, rgba(35,52,36,1) 100%); 
+  background: rgb(102, 71, 52);
+  background: linear-gradient(
+    114deg,
+    rgba(102, 71, 52, 1) 15%,
+    rgba(77, 77, 47, 1) 44%,
+    rgba(37, 56, 22, 1) 72%,
+    rgba(35, 52, 36, 1) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-    
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,700;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,700;1,700&display=swap");
 
 .container {
   text-align: center;
@@ -33,7 +38,7 @@ p {
   justify-content: right;
   height: 50px;
   width: 100%;
-  background-color: #FAF9F6;
+  background-color: #faf9f6;
   border-bottom: 2px solid #bbb;
 }
 
@@ -49,16 +54,21 @@ p {
 }
 
 .navbar a:hover {
-  background-color: rgba(0,0,0,0.1);
-
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   font-size: 7rem;
   font-weight: 700;
-  margin-bottom: 0px; 
-  background: rgb(102,71,52);
-  background: linear-gradient(114deg, rgba(102,71,52,1) 15%, rgba(77,77,47,1) 44%, rgba(37,56,22,1) 72%, rgba(35,52,36,1) 100%); 
+  margin-bottom: 0px;
+  background: rgb(102, 71, 52);
+  background: linear-gradient(
+    114deg,
+    rgba(102, 71, 52, 1) 15%,
+    rgba(77, 77, 47, 1) 44%,
+    rgba(37, 56, 22, 1) 72%,
+    rgba(35, 52, 36, 1) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -81,13 +91,13 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bolder; 
+  font-weight: bolder;
   font-size: 20px;
-  transition: font-size .1s ease-in-out;
+  transition: font-size 0.1s ease-in-out;
 }
 
 .selectedColor:hover {
-  font-size: 22px ;
+  font-size: 22px;
 }
 
 button:hover {
@@ -109,7 +119,6 @@ button:hover {
   align-items: center;
   gap: 12px;
   margin-bottom: 1rem;
- 
 }
 
 .hint {
@@ -121,7 +130,6 @@ button:hover {
   height: 26px;
   border-radius: 5px;
   border: 1px solid #ccc;
-
 }
 
 .hint#perfect {
@@ -136,7 +144,7 @@ button:hover {
   font-size: 14px;
 }
 
-.hint#close svg{
+.hint#close svg {
   transform: scale(0.75);
 }
 
@@ -159,10 +167,16 @@ button:hover {
   height: 160px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background: linear-gradient(114deg, rgba(102,71,52,1) 15%, rgba(77,77,47,1) 44%, rgba(37,56,22,1) 72%, rgba(35,52,36,1) 100%); 
+  background: linear-gradient(
+    114deg,
+    rgba(102, 71, 52, 1) 15%,
+    rgba(77, 77, 47, 1) 44%,
+    rgba(37, 56, 22, 1) 72%,
+    rgba(35, 52, 36, 1) 100%
+  );
 }
 
-.colorInfo  p {
+.colorInfo p {
   font-size: 14px;
 }
 
@@ -206,7 +220,7 @@ button:hover {
   color: #333;
 }
 .popup .close:hover {
-  color: #06D85F;
+  color: #06d85f;
 }
 .popup .content {
   max-height: 30%;
