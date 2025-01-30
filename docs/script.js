@@ -96,7 +96,7 @@ if (storageAvailable("localStorage")) {
   for (const hsl of gameState) {
     distance = addColorHint(hsl);
     colorPicker.colors[0].hsl = hsl;
-    numberOfGuess++
+    numberOfGuess++;
   }
   if (numberOfGuess >= totalAllowedGuesses) {
     finishGame(distance, gameState[gameState.length - 1]);
