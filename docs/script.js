@@ -16,7 +16,7 @@ colorPicker.on(["mount"], function () {
   var colorWheel = document.getElementsByClassName("IroWheel")[0]
   colorWheel.style.display = ""
   colorWheel.classList.add("hidden")
-  colorWheel.classList.add("md:inline-block")
+  colorWheel.classList.add("sm:inline-block")
 });
 
 
@@ -72,7 +72,7 @@ function addColorHint(hsl) {
   const [resultDivs, distance] = compareHSVColors(targetColor, chosenColor);
 
   const nGuess = document.createElement("div");
-  nGuess.innerHTML = `<div onClick="updateRecord(this)" class="flex-1 max-w-72 items-center rounded border cursor-pointer" id="text" style="background: ${hslToString(hsl)}; color: hsl(${hsl.h}, ${(hsl.s + 50) % 100}%, ${(hsl.l + 50) % 100}%);">&emsp;${numberOfGuess} | 3 &emsp; Distance to Color: ${distance}</div>`;
+  nGuess.innerHTML = `<div onClick="updateRecord(this)" class="sm:w-72 w-full items-center rounded border cursor-pointer" id="text" style="background: ${hslToString(hsl)}; color: hsl(${hsl.h}, ${(hsl.s + 50) % 100}%, ${(hsl.l + 50) % 100}%);">&emsp;${numberOfGuess} | 3 &emsp; Distance to Color: ${distance}</div>`;
   resultDivs.append(nGuess.firstChild);
 
   resultDiv.append(resultDivs);
@@ -110,7 +110,7 @@ function finishGame(distance, finalColorHsl) {
   selectedColorDiv.textContent = "";
   const resultRow = document.createElement("div");
   const finalGuess = document.createElement("div");
-  finalGuess.innerHTML = `<a data-popup="resultOverlay" onClick="openPopup(this)" class="flex-1 w-full  text-center justify-center p-2 rounded border cursor-pointer" style="background: ${targetColorHSL}; color: hsl(${targetColor[0]}, ${(targetColor[1] + 50) % 100}%, ${(targetColor[2] + 50) % 100}%);">Your final distance was ${distance} away.<br/>
+  finalGuess.innerHTML = `<a data-popup="resultOverlay" onClick="openPopup(this)" class="flex-1 items-center text-center justify-center p-2 rounded border cursor-pointer" style="background: ${targetColorHSL}; color: hsl(${targetColor[0]}, ${(targetColor[1] + 50) % 100}%, ${(targetColor[2] + 50) % 100}%);">Your final distance was ${distance} away.<br/>
   Click to see results. </a>`;
   resultRow.append(finalGuess.firstChild)
   resultDiv.append(resultRow.firstChild);

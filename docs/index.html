@@ -30,19 +30,20 @@
       <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-3xl p-6 mx-auto mt-40 relative text-center">
         <a class="close-popup absolute top-4 right-6 text-xl cursor-pointer" href="#">&times;</a>
         <p id="finalDistance" class="text-lg font-semibold">Your final distance to the target color was:</p>
-        <div class="mt-4 flex justify-between" id="resultContent">
-          <div id="yourColor" class="text-right min-w-40">
-            <h3>Your Color</h3>
-            <p>RGB HERE</p>
-            <p>HSL HERE</p>
-          </div>
-          <div id="swatch" class="w-60 h-40 rounded-md "></div>
-          <div id="targetColor" class="text-left min-w-40">
-            <h3>Target Color</h3>
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4">
+          <div id="yourColor" class="text-center sm:text-right min-w-40">
+            <h3 class="text-lg font-semibold">Your Color</h3>
             <p>RGB HERE</p>
             <p>HSL HERE</p>
           </div>
           
+          <div id="swatch" class="w-full h-40 sm:h-40 rounded-md"></div>
+        
+          <div id="targetColor" class="text-center sm:text-left min-w-40">
+            <h3 class="text-lg font-semibold">Target Color</h3>
+            <p>RGB HERE</p>
+            <p>HSL HERE</p>
+          </div>
         </div>
         <p>Come back tomorrow for another challenge!</p>
       </div>
@@ -52,14 +53,14 @@
       <a data-popup="popup1" onClick="openPopup(this)" class="w-10 h-10 flex items-center justify-center text-2xl bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer">?</a>
     </nav>
 
-    <div class="md:max-w-3xl text-center justify-center mx-auto mt-10 p-4 md:p-0">
-      <h1 class="text-6xl md:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-green-700">LandShade</h1>
+    <div class="sm:max-w-3xl text-center justify-center mx-auto mt-10 p-4 sm:p-0">
+      <h1 class="text-6xl sm:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-green-700">LandShade</h1>
       <p id="promptParagraph" class="text-2xl mt-4"></p>
-      <div class="mt-6 flex items-stretch gap-3 w-full ">
+      <div class="mt-6 flex items-stretch gap-3 w-full">
         <div id="ColorPicker"></div>
-        <div id="SelectedColor" class="flex-1 max-w-72 rounded-xl border shadow-md flex items-center justify-center text-xl font-bold cursor-pointer transition-all duration-300 ease-in-out hover:text-2xl">Check Color</div>
+        <div id="SelectedColor" class="flex-1 sm:max-w-72 rounded-xl border shadow-md flex items-center justify-center text-xl font-bold cursor-pointer transition-all duration-300 ease-in-out hover:text-2xl">Check Color</div>
       </div>
-      <div id="result" class="mt-4 space-y-3 flex gap-3 w-full flex-col justify-right"></div>
+      <div id="result" class="mt-4 space-y-3 flex gap-3 sm:w-fit flex-col sm:ml-auto ml-3"></div>
     </div>
     <script src="iro.min.js"></script>
     <script src="utils.js"></script>

@@ -140,12 +140,12 @@ function compareHSVColors(target, selected) {
     } else if (Math.abs(difference) > 2.5) {
       guessType = "bg-orange-400";  // close guess
     }
-    return `<div class="w-7  border ${guessType} rounded flex justify-center items-center">${arrow}</div>`;
+    return `<div class="w-7 min-w-7 border ${guessType} rounded flex justify-center items-center">${arrow}</div>`;
   };
 
   // Create a new resultRow div
   const resultRow = document.createElement("div");
-  resultRow.className = "flex min-h-7 gap-3 mx-3 justify-right w-full float-right";
+  resultRow.className = "flex min-h-7 gap-3";
 
   // Append each hint div to the resultRow
   differences.forEach((diff) => {
