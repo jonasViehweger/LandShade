@@ -73,9 +73,12 @@ function addColorHint(hsl) {
 
   const nGuess = document.createElement("div");
   nGuess.innerHTML = `<div onClick="updateRecord(this)" class="sm:w-72 w-full items-center rounded border cursor-pointer" id="text" style="background: ${hslToString(hsl)}; color: hsl(${hsl.h}, ${(hsl.s + 50) % 100}%, ${(hsl.l + 50) % 100}%);">&emsp;${numberOfGuess} | 3 &emsp; Distance to Color: ${distance}</div>`;
-  resultDivs.append(nGuess.firstChild);
-
+  const newHint = nGuess.firstChild;
+  resultDivs.append(newHint);
   resultDiv.append(resultDivs);
+
+  newHint.scrollIntoView({ behavior: "smooth", block: "end" });
+
   return distance;
 }
 
@@ -112,8 +115,11 @@ function finishGame(distance, finalColorHsl) {
   const finalGuess = document.createElement("div");
   finalGuess.innerHTML = `<a data-popup="resultOverlay" onClick="openPopup(this)" class="flex-1 items-center text-center justify-center p-2 rounded border cursor-pointer" style="background: ${targetColorHSL}; color: hsl(${targetColor[0]}, ${(targetColor[1] + 50) % 100}%, ${(targetColor[2] + 50) % 100}%);">Your final distance was ${distance} away.<br/>
   Click to see results. </a>`;
-  resultRow.append(finalGuess.firstChild)
+  const finalResult = finalGuess.firstChild;
+  resultRow.append(finalResult);
   resultDiv.append(resultRow.firstChild);
+
+  finalResult.scrollIntoView({ behavior: "smooth", block: "end" });
 }
 
 if (storageAvailable("localStorage")) {
@@ -125,13 +131,11 @@ if (storageAvailable("localStorage")) {
   var gameState = JSON.parse(localStorage.getItem("gameState") || "[]");
   var distance = 0;
   for (const hsl of gameState) {
-    console.log(numberOfGuess)
     distance = addColorHint(hsl);
     colorPicker.colors[0].hsl = hsl;
     numberOfGuess++;
   }
   if (numberOfGuess > totalAllowedGuesses) {
-    console.log(numberOfGuess)
     finishGame(distance, gameState[gameState.length - 1]);
   }
 }
