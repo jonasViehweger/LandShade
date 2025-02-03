@@ -45,8 +45,10 @@ document.querySelectorAll(".popup").forEach((popup) => {
   });
 });
 
-var selectedColorDiv = document.getElementById("SelectedColor");
-var resultDiv = document.getElementById("result");
+let selectedColorDiv = document.getElementById("SelectedColor");
+let resultDiv = document.getElementById("result");
+let finalResult = document.getElementById("finalResult");
+let hintText = document.getElementById("hintText");
 
 // Select color: It's randomly sorted and we just go through one by one, by using the date as index
 var diffToEpoch = diffToEpoch();
@@ -66,21 +68,6 @@ var targetColorHex = rgbToHex(
 );
 var numberOfGuess = 1;
 var totalAllowedGuesses = 3;
-
-function addColorHint(hsl) {
-  var chosenColor = Object.values(hsl);
-  const [resultDivs, distance] = compareHSVColors(targetColor, chosenColor);
-
-  const nGuess = document.createElement("div");
-  nGuess.innerHTML = `<div onClick="updateRecord(this)" class="sm:w-72 w-full items-center rounded border cursor-pointer" id="text" style="background: ${hslToString(hsl)}; color: hsl(${hsl.h}, ${(hsl.s + 50) % 100}%, ${(hsl.l + 50) % 100}%);">&emsp;${numberOfGuess} | 3 &emsp; Distance to Color: ${distance}</div>`;
-  const newHint = nGuess.firstChild;
-  resultDivs.append(newHint);
-  resultDiv.append(resultDivs);
-
-  newHint.scrollIntoView({ behavior: "smooth", block: "end" });
-
-  return distance;
-}
 
 function finishGame(distance, finalColorHsl) {
   var finalDistance = document.getElementById("finalDistance");
@@ -111,19 +98,17 @@ function finishGame(distance, finalColorHsl) {
 
   selectedColorDiv.style.pointerEvents = "none";
   selectedColorDiv.textContent = "";
-  const resultRow = document.createElement("div");
-  const finalGuess = document.createElement("div");
-  finalGuess.innerHTML = `<a data-popup="resultOverlay" onClick="openPopup(this)" class="flex-1 items-center text-center justify-center p-2 rounded border cursor-pointer" style="background: ${targetColorHSL}; color: hsl(${targetColor[0]}, ${(targetColor[1] + 50) % 100}%, ${(targetColor[2] + 50) % 100}%);">Your final distance was ${distance} away.<br/>
-  Click to see results. </a>`;
-  const finalResult = finalGuess.firstChild;
-  resultRow.append(finalResult);
-  resultDiv.append(resultRow.firstChild);
-
+  finalResult.style.background = targetColorHSL;
+  finalResult.style.color = `hsl(${targetColor[0]}, ${(targetColor[1] + 50) % 100}%, ${(targetColor[2] + 50) % 100}%)`
+  finalResult.innerHTML = `Your final distance was ${distance} away.</br>Click for results.`
+  finalResult.parentNode.appendChild(finalResult);
+  finalResult.classList.remove("hidden");
   finalResult.scrollIntoView({ behavior: "smooth", block: "end" });
 }
 
 if (storageAvailable("localStorage")) {
   var lastPlayed = localStorage.getItem("lastPlayed") || -1;
+  // If played for the first time: Start tour
   if (lastPlayed != diffToEpoch) {
     localStorage.setItem("lastPlayed", diffToEpoch);
     localStorage.setItem("gameState", JSON.stringify([]));
@@ -131,12 +116,19 @@ if (storageAvailable("localStorage")) {
   var gameState = JSON.parse(localStorage.getItem("gameState") || "[]");
   var distance = 0;
   for (const hsl of gameState) {
-    distance = addColorHint(hsl);
+    const [resultDivs, newDistance] = addColorHint(hsl, targetColor);
+    distance = newDistance;
+    resultDiv.append(resultDivs);
+    newHint.scrollIntoView({ behavior: "smooth", block: "end" });
+
     colorPicker.colors[0].hsl = hsl;
     numberOfGuess++;
   }
   if (numberOfGuess > totalAllowedGuesses) {
     finishGame(distance, gameState[gameState.length - 1]);
+  }
+  if (localStorage.getItem("tourTaken") != true){
+    startTour()
   }
 }
 
@@ -179,7 +171,9 @@ selectedColorDiv.addEventListener("click", function () {
   var hsl = colorPicker.color.hsl;
   gameState.push(hsl);
   localStorage.setItem("gameState", JSON.stringify(gameState));
-  var distance = addColorHint(hsl);
+  const [resultDivs, distance] = addColorHint(hsl, targetColor);
+  resultDiv.append(resultDivs);
+  newHint.scrollIntoView({ behavior: "smooth", block: "end" });
 
   numberOfGuess++;
   if (numberOfGuess > totalAllowedGuesses) {
