@@ -127,7 +127,7 @@ if (storageAvailable("localStorage")) {
   if (numberOfGuess > totalAllowedGuesses) {
     finishGame(distance, gameState[gameState.length - 1]);
   }
-  if (localStorage.getItem("tourTaken") != true){
+  if (localStorage.getItem("tourTaken") != "true"){
     startTour()
   }
 }
