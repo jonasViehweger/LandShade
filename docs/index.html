@@ -12,7 +12,7 @@
     <div id="tourOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50"></div>
 
     <!-- Tour Text Container -->
-    <div id="tourText" class="hidden sm:max-w-3xl fixed top-1/2 left-1/2 transform bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg z-50">
+    <div id="tourText" class="hidden sm:w-3xl max-w-3xl mx-auto inset-x-0 absolute transform bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg z-50">
       <p id="tourMessage">This is a sample tour message.</p>
       <button id="nextButton" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Next</button>
       <button id="notInterestedButton" onClick="endTour()" class="mt-4 px-4 py-2 bg-gray-500 text-white rounded ml-2">Not Interested</button>
@@ -21,11 +21,13 @@
     <!-- Hint Text -->
     <div onClick="updateRecord(this)" class="sm:w-72 w-full items-center rounded border cursor-pointer hidden" id="hintText"></div>
 
-    <div id="popup1" class="popup z-10 fixed inset-0 bg-black bg-opacity-70 hidden">
-      <div class="bg-white dark:bg-gray-800 rounded-lg max-w-3xl p-6 mx-auto mt-40 relative">
+    <div id="popup1" class="popup z-10 fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center max-h-screen overflow-y-auto">
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-3xl mx-auto mt-40 relative">
+        <a class="close-popup text-center size-8 float-right text-xl cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700">&times;</a>
         <h2 class="text-2xl font-bold">How to play</h2>
-        <a class="close-popup absolute top-4 right-6 text-xl cursor-pointer">&times;</a>
         <div class="mt-4 text-gray-700 dark:text-gray-300">
+          You can get a quick introduction to the game by <a id="tourStart" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="#" onclick="startTour();">taking the tour</a>.
+          <br /><br />
           The game is to correctly guess the color of some land cover in a country for a certain month. 
           The colors are based on 20 years of satellite data.
           <br /><br />
@@ -39,9 +41,9 @@
       </div>
     </div>
 
-    <div id="resultOverlay" class="popup z-10 fixed inset-0 bg-black bg-opacity-70 hidden">
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-3xl p-6 mx-auto mt-40 relative text-center">
-        <a class="close-popup absolute top-4 right-6 text-xl cursor-pointer" href="#">&times;</a>
+    <div id="resultOverlay" class="popup z-10 fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center max-h-screen overflow-y-auto">
+      <div class="bg-white dark:bg-gray-800 rounded-lg max-w-3xl p-6 mx-auto mt-40 relative text-center">
+        <a class="close-popup size-8 float-right text-xl cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700" href="#">&times;</a>
         <p id="finalDistance" class="text-lg font-semibold">Your final distance to the target color was:</p>
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4">
           <div id="yourColor" class="text-center sm:text-right min-w-40">

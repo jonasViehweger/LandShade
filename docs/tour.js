@@ -21,7 +21,7 @@ const tourSteps = [
     message: "You are also shown how many guesses you have left and your score in terms of distance to the target color. Each of the sliders goes from 0-100, the score is the sum of how far you are away from the target color on each slider. If you ever want to go to a previous guess, you can also click on this area.",
   },
   {
-    elementId: "title",
+    elementId: "faq",
     message: "Lastly, there's some general hints and background info available at the (?) in the top right if you're interested. Happy guessing!"
   }
 ];
@@ -39,6 +39,12 @@ let hintNotAvailable = false;
 
 // Start the tour
 function startTour() {
+  // close all pop-ups which might be open
+  document.querySelectorAll(".popup").forEach((popup) => {
+    popup.classList.add("hidden");
+  });
+
+
   tourOverlay.classList.remove("hidden");
   tourText.classList.remove("hidden");
   updateButtonVisibility();
@@ -64,7 +70,7 @@ function updateButtonVisibility() {
 }
 
   // Add debounce function to optimize resize handling
-function debounce(func, timeout = 100) {
+function debounce(func, timeout = 50) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
@@ -82,6 +88,13 @@ function handleResize() {
 function showStep(stepIndex) {
   const step = tourSteps[stepIndex];
   const element = document.getElementById(step.elementId);
+
+  // Smooth scroll to ensure element is visible
+  element.scrollIntoView({
+    behavior: 'instant',
+    block: 'center',
+    inline: 'center'
+  });
   const rect = element.getBoundingClientRect();
 
   // Update overlay clip path
@@ -119,27 +132,36 @@ function showStep(stepIndex) {
     topPosition = rect.top + window.scrollY - textHeight - 10;
   }
 
-  // Ensure text container stays within viewport
-  const maxTop = window.scrollY + viewportHeight - textHeight - 20;
-  topPosition = Math.min(topPosition, maxTop);
-  topPosition = Math.max(topPosition, window.scrollY + 20);
-
   // Apply positions
   tourText.style.top = `${topPosition}px`;
-  tourText.style.left = `${rect.left + window.scrollX}px`;
+}
 
-  // Smooth scroll to ensure element is visible
-  element.scrollIntoView({
-    behavior: 'smooth',
-    block: 'nearest',
-    inline: 'nearest'
-  });
+function updateOverlay(stepIndex){
+  const step = tourSteps[stepIndex];
+  const element = document.getElementById(step.elementId);
+  const rect = element.getBoundingClientRect();
+
+  // Update overlay clip path
+  tourOverlay.style.clipPath = `
+    polygon(
+      0% 0%, 
+      0% 100%, 
+      ${rect.left}px 100%, 
+      ${rect.left}px ${rect.top}px, 
+      ${rect.right}px ${rect.top}px, 
+      ${rect.right}px ${rect.bottom}px, 
+      ${rect.left}px ${rect.bottom}px, 
+      ${rect.left}px 100%, 
+      100% 100%, 
+      100% 0%
+    )
+  `;
 }
 
 // Add scroll listener
 window.addEventListener('scroll', debounce(() => {
   if (!tourOverlay.classList.contains('hidden')) {
-    showStep(currentStep);
+    updateOverlay(currentStep)
   }
 }));
 
@@ -155,6 +177,7 @@ function endTour() {
     const hint = document.getElementById("hint1");
     hint.remove()
   }
+  currentStep = 0;
 }
 
 // Move to the next step
