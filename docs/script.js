@@ -68,6 +68,8 @@ var targetColorHex = rgbToHex(
 );
 var numberOfGuess = 1;
 var totalAllowedGuesses = 3;
+var shortestDistance = Infinity;
+var bestColor = "None"
 
 function finishGame(distance, finalColorHsl) {
   var finalDistance = document.getElementById("finalDistance");
@@ -100,7 +102,7 @@ function finishGame(distance, finalColorHsl) {
   selectedColorDiv.textContent = "";
   finalResult.style.background = targetColorHSL;
   finalResult.style.color = `hsl(${targetColor[0]}, ${(targetColor[1] + 50) % 100}%, ${(targetColor[2] + 50) % 100}%)`
-  finalResult.innerHTML = `Your final distance was ${distance} away.</br>Click for results.`
+  finalResult.innerHTML = `Your shortest distance was ${distance} away.</br>Click for results.`
   finalResult.parentNode.appendChild(finalResult);
   finalResult.classList.remove("hidden");
   finalResult.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -114,10 +116,12 @@ if (storageAvailable("localStorage")) {
     localStorage.setItem("gameState", JSON.stringify([]));
   }
   var gameState = JSON.parse(localStorage.getItem("gameState") || "[]");
-  var distance = 0;
   for (const hsl of gameState) {
-    const [resultDivs, newDistance] = addColorHint(hsl, targetColor);
-    distance = newDistance;
+    const [resultDivs, distance] = addColorHint(hsl, targetColor);
+    if (distance < shortestDistance){
+      shortestDistance = distance;
+      bestColor = hsl;
+    }
     resultDiv.append(resultDivs);
     newHint.scrollIntoView({ behavior: "smooth", block: "end" });
 
@@ -125,7 +129,7 @@ if (storageAvailable("localStorage")) {
     numberOfGuess++;
   }
   if (numberOfGuess > totalAllowedGuesses) {
-    finishGame(distance, gameState[gameState.length - 1]);
+    finishGame(shortestDistance, bestColor);
   }
   if (localStorage.getItem("tourTaken") != "true"){
     startTour()
@@ -172,12 +176,16 @@ selectedColorDiv.addEventListener("click", function () {
   gameState.push(hsl);
   localStorage.setItem("gameState", JSON.stringify(gameState));
   const [resultDivs, distance] = addColorHint(hsl, targetColor);
+  if (distance < shortestDistance){
+    shortestDistance = distance;
+    bestColor = hsl;
+  }
   resultDiv.append(resultDivs);
   newHint.scrollIntoView({ behavior: "smooth", block: "end" });
 
   numberOfGuess++;
   if (numberOfGuess > totalAllowedGuesses) {
-    finishGame(distance, hsl);
+    finishGame(shortestDistance, bestColor);
     window.location.href = "#resultOverlay";
   }
 });
